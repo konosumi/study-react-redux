@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import { connect } from "react-redux";
+import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -9,14 +9,26 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to React Redux Todo List</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <ul>
+        {this.props.todos.map(todo => {
+          return (
+            <li key={todo}>{todo}</li>
+          );
+        })}
+        </ul>
       </div>
     );
   }
 }
 
-export default connect()( App);
+// ReduxのStoreの情報をAppのpropsに渡すための関数
+const mapStateToProps = state => {
+  return {
+    todos: state.todos.list
+  }
+};
+
+// ReduxのStoreの情報をAppのpropsに渡す
+export default connect(mapStateToProps)(App);
